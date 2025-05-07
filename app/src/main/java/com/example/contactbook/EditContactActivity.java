@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,6 +51,11 @@ public class EditContactActivity extends AppCompatActivity {
             String updatedPhone = phoneInput.getText().toString();
             String updatedEmail = emailInput.getText().toString();
 
+            if (!isValidEmail(updatedEmail)) {
+                Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Contact updatedContact = new Contact(updatedName, updatedPhone, updatedEmail);
 
             Intent resultIntent = new Intent();
@@ -60,5 +66,9 @@ public class EditContactActivity extends AppCompatActivity {
         });
 
         cancelButton.setOnClickListener(v -> finish());
+    }
+
+    public boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

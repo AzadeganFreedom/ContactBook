@@ -67,6 +67,11 @@ public class AddContactActivity extends AppCompatActivity {
                 return;
             }
 
+            if (!isValidEmail(mail)) { // Validate email format
+                Toast.makeText(this, "Invalid email format", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Contact contact = new Contact( name, phone, mail); // Ny Contact instance
 
             SharedPreferences prefs = getSharedPreferences("contacts", MODE_PRIVATE);
@@ -87,5 +92,9 @@ public class AddContactActivity extends AppCompatActivity {
             startActivity(intent);
 
         });
+    }
+
+    public boolean isValidEmail(String email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }
